@@ -10,7 +10,7 @@ public interface BaseService<T> {
 
     T findById(Long id);
 
-    void update(T obj);
+    T update(T obj);
 
     void delete(Long id);
 }

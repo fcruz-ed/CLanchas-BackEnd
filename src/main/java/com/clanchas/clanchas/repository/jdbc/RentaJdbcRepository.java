@@ -18,30 +18,28 @@ import java.util.Optional;
 import static com.clanchas.clanchas.repository.extractor.Extractor.EXTRACTOR_RENTA;
 import static com.clanchas.clanchas.repository.parameter.CustomSqlParameterSource.createRentaParameterSource;
 
-// TODO: hacer que el save y update regresen por defecto la renta actualizada
 @Repository
-public class RentaJdbcRepository implements RentaRepository {
-
-    @Autowired
-    private JdbcTemplate jt;
+public class RentaJdbcRepository implements RentaRepository<Renta> {
 
     private final SimpleJdbcInsert rentaInsert;
+
+    private final JdbcTemplate jt;
 
     private final LanchaRepository lanchaRepository;
 
     @Autowired
-    public RentaJdbcRepository(DataSource dataSource, LanchaRepository lanchaRepository) {
+    public RentaJdbcRepository(DataSource dataSource, JdbcTemplate jt, LanchaRepository lanchaRepository) {
         this.rentaInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("lancha_rentada")
                 .usingGeneratedKeyColumns("id");
+        this.jt = jt;
         this.lanchaRepository = lanchaRepository;
     }
 
     @Override
     public Optional<Renta> save(Renta renta) {
         Number newKey = this.rentaInsert.executeAndReturnKey(createRentaParameterSource(renta));
-        renta.setId(newKey.longValue());
-        return Optional.of(renta);
+        return this.findById(newKey.longValue());
     }
 
     @Override
@@ -52,18 +50,16 @@ public class RentaJdbcRepository implements RentaRepository {
             renta.setLancha(EntityUtils.getById(lanchas, Lancha.class, renta.getLancha_id()));
         }
         return rentas;
-        //return jt.query("select * from lancha_rentada;", new RentaMapper());
     }
 
     @Override
     public Optional<Renta> findById(Long id) {
         Optional<Renta> renta = jt.query("select * from lancha_rentada where id=?;", EXTRACTOR_RENTA, id);
-        List<Lancha> lanchas = lanchaRepository.findAll();
         if (renta != null && renta.isPresent()) {
+            List<Lancha> lanchas = lanchaRepository.findAll();
             renta.get().setLancha(EntityUtils.getById(lanchas, Lancha.class, renta.get().getLancha_id()));
         }
         return renta;
-        //return jt.query("select * from lancha_rentada where id=?;", EXTRACTOR_RENTA, id);
     }
 
     @Override
@@ -72,14 +68,16 @@ public class RentaJdbcRepository implements RentaRepository {
     }
 
     @Override
-    public void update(Renta renta) {
+    public Optional<Renta> update(Renta renta) {
         jt.update("update lancha_rentada set lancha_id=?, en_uso=?, c_adultos=?, c_jovenes=?, observaciones=? where id=?;",
                 renta.getLancha_id(), renta.isEn_uso(), renta.getC_adultos(), renta.getC_jovenes(), renta.getObservaciones(),
                 renta.getId());
+        return this.findById(renta.getId());
     }
 
     @Override
-    public void updateUso(Long id, boolean uso) {
+    public Optional<Renta> updateUso(Long id, boolean uso) {
         jt.update("update lancha_rentada set en_uso=? where id=?", uso, id);
+        return this.findById(id);
     }
 }

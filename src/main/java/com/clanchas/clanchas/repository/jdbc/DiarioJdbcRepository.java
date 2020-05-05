@@ -57,8 +57,9 @@ public class DiarioJdbcRepository implements DiarioRepository {
     }
 
     @Override
-    public void update(Diario diario) {
+    public Optional<Diario> update(Diario diario) {
         jt.update("update diario set descripcion=? where id=?;", diario.getDescripcion(), diario.getId());
+        return this.findById(diario.getId());
     }
 
     @Override

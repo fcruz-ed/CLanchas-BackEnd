@@ -56,9 +56,10 @@ public class LanchaJdbcRepository implements LanchaRepository {
     }
 
     @Override
-    public void update(Lancha obj) {
+    public Optional<Lancha> update(Lancha lancha) {
         jt.update("update lancha set nombre=?, estado=? where id=?;",
-                obj.getNombre(), obj.getEstado(), obj.getId());
+                lancha.getNombre(), lancha.getEstado(), lancha.getId());
+        return this.findById(lancha.getId());
     }
 
     private Integer obtenerLanchasConNumero(int numero) {

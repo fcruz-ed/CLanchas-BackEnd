@@ -28,8 +28,8 @@ public class LanchaService implements BaseService<Lancha> {
         return lanchaOptional.orElse(null);
     }
 
-    public void update(Lancha lancha) {
-        lanchaRepository.update(lancha);
+    public Lancha update(Lancha lancha) {
+        return lanchaRepository.update(lancha).orElse(null);
     }
 
     public void delete(Long id) {

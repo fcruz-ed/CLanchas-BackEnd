@@ -18,8 +18,12 @@ public class RentaController {
 
     private final Log log = LogFactory.getLog(getClass());
 
+    private final RentaService rentaService;
+
     @Autowired
-    private RentaService rentaService;
+    public RentaController(RentaService rentaService) {
+        this.rentaService = rentaService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Renta>> findAll() {
@@ -59,8 +63,7 @@ public class RentaController {
         rentaToUpdate.setC_adultos(renta.getC_adultos());
         rentaToUpdate.setC_jovenes(renta.getC_jovenes());
         rentaToUpdate.setObservaciones(renta.getObservaciones());
-        rentaService.update(rentaToUpdate);
-        return new ResponseEntity<>(rentaService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(rentaService.update(rentaToUpdate), HttpStatus.OK);
     }
 
     @PutMapping("/update-uso/{id},{en_uso}")
@@ -70,7 +73,7 @@ public class RentaController {
             return new ResponseEntity<>("No se ha encontrado la Renta con el id: " + id, HttpStatus.NOT_FOUND);
         }
         renta.setEn_uso(uso);
-        rentaService.updateUso(id, uso);
+        renta = rentaService.updateUso(id, uso);
         return new ResponseEntity<>(renta, HttpStatus.OK);
     }
 

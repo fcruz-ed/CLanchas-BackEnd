@@ -48,13 +48,14 @@ public class PrecioJdbcRepository implements PrecioRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
-        jt.update("delete from tabulador_precios where id=?;", id);
+    public Optional<Precio> update(Precio precio) {
+        jt.update("update tabulador_precios set tiempo=?, precio=?, estado=? where id=?;", precio.getTiempo(),
+                precio.getPrecio(), precio.getEstado(), precio.getId());
+        return this.findById(precio.getId());
     }
 
     @Override
-    public void update(Precio precio) {
-        jt.update("update tabulador_precios set tiempo=?, precio=?, estado=? where id=?;", precio.getTiempo(),
-                precio.getPrecio(), precio.getEstado(), precio.getId());
+    public void deleteById(Long id) {
+        jt.update("delete from tabulador_precios where id=?;", id);
     }
 }

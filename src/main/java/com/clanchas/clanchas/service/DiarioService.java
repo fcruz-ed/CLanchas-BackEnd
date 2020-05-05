@@ -29,8 +29,8 @@ public class DiarioService implements BaseService<Diario> {
     }
 
     @Override
-    public void update(Diario obj) {
-
+    public Diario update(Diario diario) {
+        return diarioRepository.update(diario).orElse(null);
     }
 
     @Override

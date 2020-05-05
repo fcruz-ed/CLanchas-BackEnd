@@ -1,5 +1,6 @@
 package com.clanchas.clanchas.service;
 
+import com.clanchas.clanchas.model.Lancha;
 import com.clanchas.clanchas.model.Precio;
 import com.clanchas.clanchas.repository.PrecioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class PrecioService implements BaseService<Precio> {
         return tabuladorPreciosOptional.orElse(null);
     }
 
-    public void update(Precio precio) {
-        precioRepository.update(precio);
+    public Precio update(Precio precio) {
+        return precioRepository.update(precio).orElse(null);
     }
 
     public void delete(Long id) {
