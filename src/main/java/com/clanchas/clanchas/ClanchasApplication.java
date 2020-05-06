@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// TODO: Terminar las tablas pendientes
 @SpringBootApplication
 public class ClanchasApplication implements CommandLineRunner {
 
