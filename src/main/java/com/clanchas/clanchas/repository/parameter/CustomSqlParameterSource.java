@@ -1,12 +1,9 @@
 package com.clanchas.clanchas.repository.parameter;
 
-import com.clanchas.clanchas.model.Diario;
-import com.clanchas.clanchas.model.Lancha;
-import com.clanchas.clanchas.model.Precio;
-import com.clanchas.clanchas.model.Renta;
+import com.clanchas.clanchas.model.*;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 
-public class CustomSqlParameterSource {
+public abstract class CustomSqlParameterSource {
     /**
      * Creates a {@link MapSqlParameterSource} based on data values from the supplied {@link Lancha} instance.
      */
@@ -51,4 +48,15 @@ public class CustomSqlParameterSource {
                 .addValue("c_jovenes", renta.getC_jovenes())
                 .addValue("observaciones", renta.getObservaciones());
     }
+    /**
+     * Creates a {@link MapSqlParameterSource} based on data values from the supplied {@link Uso} instance.
+     */
+    public static MapSqlParameterSource createUsoParameterSource(Uso uso) {
+        return new MapSqlParameterSource()
+                .addValue("id", uso.getId())
+                .addValue("lancha_rentada_id", uso.getRenta_id())
+                .addValue("tiempo", uso.getTiempo())
+                .addValue("precio", uso.getPrecio());
+    }
+
 }
