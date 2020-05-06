@@ -1,40 +1,45 @@
 package com.clanchas.clanchas.service;
 
-import com.clanchas.clanchas.model.Lancha;
 import com.clanchas.clanchas.model.Precio;
-import com.clanchas.clanchas.repository.PrecioRepository;
+import com.clanchas.clanchas.model.Renta;
+import com.clanchas.clanchas.repository.jdbc.PrecioJdbcRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PrecioService implements BaseService<Precio> {
 
+    private final PrecioJdbcRepository repository;
+
     @Autowired
-    private PrecioRepository precioRepository;
-
-    public Precio save(Precio tp) {
-        Optional<Precio> tabuladorPreciosOptional = precioRepository.save(tp);
-        return tabuladorPreciosOptional.orElse(null);
+    public PrecioService(PrecioJdbcRepository repository) {
+        this.repository = repository;
     }
 
+    @Override
+    public Precio save(Precio precio) {
+        return repository.save(precio).orElse(null);
+    }
+
+    @Override
     public List<Precio> findAll() {
-        return precioRepository.findAll();
+        return repository.findAll();
     }
 
+    @Override
     public Precio findById(Long id) {
-        Optional<Precio> tabuladorPreciosOptional = precioRepository.findById(id);
-        return tabuladorPreciosOptional.orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
+    @Override
     public Precio update(Precio precio) {
-        return precioRepository.update(precio).orElse(null);
+        return repository.update(precio).orElse(null);
     }
 
+    @Override
     public void delete(Long id) {
-        precioRepository.deleteById(id);
+        repository.deleteById(id);
     }
-
 }

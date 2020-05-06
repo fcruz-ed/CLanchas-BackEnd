@@ -18,16 +18,16 @@ import static com.clanchas.clanchas.repository.parameter.CustomSqlParameterSourc
 @Repository
 public class PrecioJdbcRepository implements PrecioRepository {
 
-    @Autowired
-    private JdbcTemplate jt;
+    private final JdbcTemplate jt;
 
     private final SimpleJdbcInsert precioInsert;
 
     @Autowired
-    public PrecioJdbcRepository(DataSource dataSource) {
+    public PrecioJdbcRepository(DataSource dataSource, JdbcTemplate jt) {
         this.precioInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("tabulador_precios")
                 .usingGeneratedKeyColumns("id");
+        this.jt = jt;
     }
 
     @Override

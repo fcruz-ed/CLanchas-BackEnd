@@ -18,8 +18,12 @@ public class LanchaController {
 
     private final Log log = LogFactory.getLog(getClass());
 
+    private final LanchaService lanchaService;
+
     @Autowired
-    private LanchaService lanchaService;
+    public LanchaController(LanchaService lanchaService) {
+        this.lanchaService = lanchaService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Lancha>> findAll() {
@@ -58,8 +62,7 @@ public class LanchaController {
         lanchaToUpdate.setNumero(lancha.getNumero());
         lanchaToUpdate.setNombre(lancha.getNombre());
         lanchaToUpdate.setEstado(lancha.getEstado());
-        lanchaService.update(lanchaToUpdate);
-        return new ResponseEntity<>(lanchaToUpdate, HttpStatus.OK);
+        return new ResponseEntity<>(lanchaService.update(lanchaToUpdate), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

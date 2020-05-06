@@ -3,9 +3,6 @@ package com.clanchas.clanchas.repository;
 import java.util.List;
 import java.util.Optional;
 
-// TODO: Actualizar los demás repositorios JDBC para que sean como el de Renta.
-// TODO: Actualizar los servicios para que sean como el de Renta.
-// TODO: Actualizar los controladores para que sean como el de Renta.
 public interface BaseRepository<T> {
     /**
      * Crea un nuevo registro

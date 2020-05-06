@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,8 +18,12 @@ public class PrecioController {
 
     private final Log log = LogFactory.getLog(getClass());
 
+    private final PrecioService precioService;
+
     @Autowired
-    private PrecioService precioService;
+    public PrecioController(PrecioService precioService) {
+        this.precioService = precioService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Precio>> findAll() {
@@ -41,9 +44,6 @@ public class PrecioController {
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid Precio precio) {
         log.info("Saving new Precio...");
-        /*if(precio.getFecha() == null) {
-            precio.setFecha(new Date());
-        }*/
         Precio precioSave = precioService.save(precio);
         if(precioSave == null) {
             return new ResponseEntity<>("No se ha podido crear el Precio, revise los datos mandados.", HttpStatus.BAD_REQUEST);
@@ -61,8 +61,7 @@ public class PrecioController {
         precioToUpdate.setTiempo(precio.getTiempo());
         precioToUpdate.setPrecio(precio.getPrecio());
         precioToUpdate.setEstado(precio.getEstado());
-        precioService.update(precioToUpdate);
-        return new ResponseEntity<>(precioToUpdate, HttpStatus.OK);
+        return new ResponseEntity<>(precioService.update(precioToUpdate), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

@@ -18,26 +18,26 @@ import static com.clanchas.clanchas.repository.parameter.CustomSqlParameterSourc
 @Repository
 public class LanchaJdbcRepository implements LanchaRepository {
 
-    @Autowired
-    private JdbcTemplate jt;
+    private final JdbcTemplate jt;
 
     private final SimpleJdbcInsert lanchaInsert;
 
     @Autowired
-    public LanchaJdbcRepository(DataSource dataSource) {
+    public LanchaJdbcRepository(DataSource dataSource, JdbcTemplate jt) {
         this.lanchaInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("lancha")
                 .usingGeneratedKeyColumns("id");
+        this.jt = jt;
     }
 
     @Override
-    public Optional<Lancha> save(Lancha obj) {
-        if(obtenerLanchasConNumero(obj.getNumero()) == 0) {
-            Number newKey = this.lanchaInsert.executeAndReturnKey(createLanchaParameterSource(obj));
-            obj.setId(newKey.longValue());
-            return Optional.of(obj);
+    public Optional<Lancha> save(Lancha lancha) {
+        if(obtenerLanchasConNumero(lancha.getNumero()) != 0) {
+            return Optional.empty();
         }
-        return Optional.empty();
+        Number newKey = this.lanchaInsert.executeAndReturnKey(createLanchaParameterSource(lancha));
+        lancha.setId(newKey.longValue());
+        return Optional.of(lancha);
     }
 
     @Override
