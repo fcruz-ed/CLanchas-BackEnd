@@ -10,31 +10,35 @@ import java.util.List;
 @Service
 public class DiarioService implements BaseService<Diario> {
 
+    private final DiarioRepository repository;
+
     @Autowired
-    private DiarioRepository diarioRepository;
+    public DiarioService(DiarioRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
-    public Diario save(Diario obj) {
-        return null;
+    public Diario save(Diario diario) {
+        return repository.save(diario).orElse(null);
     }
 
     @Override
     public List<Diario> findAll() {
-        return diarioRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Diario findById(Long id) {
-        return null;
+        return repository.findById(id).orElse(null);
     }
 
     @Override
     public Diario update(Diario diario) {
-        return diarioRepository.update(diario).orElse(null);
+        return repository.update(diario).orElse(null);
     }
 
     @Override
     public void delete(Long id) {
-
+        repository.deleteById(id);
     }
 }

@@ -2,6 +2,7 @@ package com.clanchas.clanchas.model;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -9,32 +10,35 @@ public class Diario extends BaseClass {
     /**
      * Día en que se hizo el diario
      */
-    private Date dia;
+    @NotNull
+    @Size(max = 10)
+    private String dia;
     /**
      * Descripción del día
      */
     @NotNull
-    @Max(500)
+    @Size(max = 500)
     private String Descripcion;
 
-    public Diario(long id, Timestamp dia, String descripcion) { }
-
-    public Diario(String descripcion) {
-        this.dia = new Date();
-        Descripcion = descripcion;
+    public Diario() {
     }
 
-    public Diario(Long id, String descripcion) {
+    public Diario(Long id, @NotNull @Size(max = 10) String dia, @NotNull @Size(max = 500) String descripcion) {
         super(id);
-        this.dia = new Date();
+        this.dia = dia;
         Descripcion = descripcion;
     }
 
-    public Date getDia() {
+    public Diario(@NotNull @Size(max = 10) String dia, @NotNull @Size(max = 500) String descripcion) {
+        this.dia = dia;
+        Descripcion = descripcion;
+    }
+
+    public String getDia() {
         return dia;
     }
 
-    public void setDia(Timestamp dia) {
+    public void setDia(String dia) {
         this.dia = dia;
     }
 

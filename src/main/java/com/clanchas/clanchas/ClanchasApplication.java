@@ -20,4 +20,5 @@ public class ClanchasApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("Aplicación iniciada...");
     }
+
 }

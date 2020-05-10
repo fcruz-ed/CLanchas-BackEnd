@@ -15,26 +15,27 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.clanchas.clanchas.repository.extractor.Extractor.EXTRACTOR_DIARIO;
+import static com.clanchas.clanchas.repository.parameter.CustomSqlParameterSource.*;
 
 @Repository
 public class DiarioJdbcRepository implements DiarioRepository {
 
-    @Autowired
-    private JdbcTemplate jt;
+    private final JdbcTemplate jt;
 
     private final SimpleJdbcInsert diarioInsert;
 
     @Autowired
-    public DiarioJdbcRepository(DataSource dataSource) {
+    public DiarioJdbcRepository(DataSource dataSource, JdbcTemplate jt) {
         this.diarioInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("diario")
                 .usingGeneratedKeyColumns("id");
+        this.jt = jt;
     }
 
     @Override
     public Optional<Diario> save(Diario diario) {
         if(obtenerDiarioConFecha(diario.getDia()).equals(0)) {
-            Number number = diarioInsert.executeAndReturnKey(CustomSqlParameterSource.createDiarioParameterSource(diario));
+            Number number = diarioInsert.executeAndReturnKey(createDiarioParameterSource(diario));
             diario.setId(number.longValue());
             return Optional.of(diario);
         }
@@ -58,7 +59,8 @@ public class DiarioJdbcRepository implements DiarioRepository {
 
     @Override
     public Optional<Diario> update(Diario diario) {
-        jt.update("update diario set descripcion=? where id=?;", diario.getDescripcion(), diario.getId());
+        jt.update("update diario set dia=?, descripcion=? where id=?;",
+                diario.getDia(), diario.getDescripcion(), diario.getId());
         return this.findById(diario.getId());
     }
 
@@ -67,7 +69,7 @@ public class DiarioJdbcRepository implements DiarioRepository {
         return jt.query("select * from diario where dia=?", EXTRACTOR_DIARIO, date);
     }
 
-    private Integer obtenerDiarioConFecha(Date date) {
+    private Integer obtenerDiarioConFecha(String date) {
         return jt.queryForObject("select count(*) from diario where dia=?;", Integer.class, date);
     }
 }
