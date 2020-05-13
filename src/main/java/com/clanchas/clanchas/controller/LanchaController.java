@@ -14,6 +14,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/lancha")
+@CrossOrigin(value = "http://localhost:8080", allowedHeaders = "*", maxAge = 3600,
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class LanchaController {
 
     private final Log log = LogFactory.getLog(getClass());
