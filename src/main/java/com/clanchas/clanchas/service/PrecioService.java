@@ -28,6 +28,10 @@ public class PrecioService implements BaseService<Precio> {
         return repository.findAll();
     }
 
+    public List<Precio> findPreciosActivos() {
+        return repository.findPreciosActivos();
+    }
+
     @Override
     public Precio findById(Long id) {
         return repository.findById(id).orElse(null);

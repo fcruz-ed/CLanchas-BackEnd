@@ -73,4 +73,9 @@ public class DiarioContoller {
         return ResponseEntity.ok("Se ha eliminado el Diario con id: " + id);
     }
 
+    @RequestMapping(value = "{_:^(?!index\\.html|api).*$}")
+    public String redirectApi() {
+        log.info("URL entered directly into the Browser, so we need to redirect...");
+        return "forward:/";
+    }
 }

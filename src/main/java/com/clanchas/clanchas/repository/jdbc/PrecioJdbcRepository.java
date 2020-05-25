@@ -42,6 +42,12 @@ public class PrecioJdbcRepository implements PrecioRepository {
         return jt.query("select * from tabulador_precios;", new PrecioMapper());
     }
 
+    public List<Precio> findPreciosActivos() {
+        List<Precio> precios = this.findAll();
+        precios.removeIf(precio -> !precio.getEstado());
+        return precios;
+    }
+
     @Override
     public Optional<Precio> findById(Long id) {
         return jt.query("select * from tabulador_precios where id=?;", EXTRACTOR_PRECIO, id);

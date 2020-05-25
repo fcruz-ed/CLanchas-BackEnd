@@ -33,6 +33,12 @@ public class RentaController {
         return new ResponseEntity<>(rentaService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/activo")
+    public ResponseEntity<List<Renta>> findRentasActivas() {
+        log.info("Getting all Rentas Activas...");
+        return new ResponseEntity<>(rentaService.findRentasActivas(), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> findById(@PathVariable("id") Long id) {
         log.info("Getting Renta with id: " + id);
@@ -90,4 +96,9 @@ public class RentaController {
         return new ResponseEntity<>("Renta con id: " + id + " ha sido eliminada.", HttpStatus.OK);
     }
 
+    @RequestMapping(value = "{_:^(?!index\\.html|api).*$}")
+    public String redirectApi() {
+        log.info("URL entered directly into the Browser, so we need to redirect...");
+        return "forward:/";
+    }
 }

@@ -14,6 +14,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/uso")
+@CrossOrigin(value = "http://localhost:8080", allowedHeaders = "*", maxAge = 3600,
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class UsoContorller {
 
     private final Log log = LogFactory.getLog(getClass());
@@ -29,6 +31,12 @@ public class UsoContorller {
     public ResponseEntity<List<Uso>> findAll() {
         log.info("Getting all Usos...");
         return new ResponseEntity<>(service.findAll() ,HttpStatus.OK);
+    }
+
+    @GetMapping("/de-renta-activa")
+    public ResponseEntity<List<Uso>> findUsosDeRentaActiva() {
+        log.info("Getting all Usos where renta is Activa...");
+        return new ResponseEntity<>(service.findUsosDeRentaActiva(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -75,4 +83,9 @@ public class UsoContorller {
         return new ResponseEntity<>("Se ha eliminado el Uso con id: " + id, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "{_:^(?!index\\.html|api).*$}")
+    public String redirectApi() {
+        log.info("URL entered directly into the Browser, so we need to redirect...");
+        return "forward:/";
+    }
 }

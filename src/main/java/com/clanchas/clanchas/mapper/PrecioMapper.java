@@ -13,8 +13,8 @@ public class PrecioMapper implements RowMapper<Precio> {
         precio.setId(resultSet.getLong("id"));
         precio.setTiempo(resultSet.getString("tiempo"));
         precio.setPrecio(resultSet.getDouble("precio"));
-        precio.setEstado(resultSet.getShort("estado"));
-        precio.setFecha(resultSet.getDate("fecha"));
+        precio.setEstado(resultSet.getBoolean("estado"));
+        precio.setFecha(resultSet.getString("fecha"));
         return precio;
     }
 }

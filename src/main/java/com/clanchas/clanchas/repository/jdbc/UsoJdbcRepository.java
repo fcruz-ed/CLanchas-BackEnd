@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.clanchas.clanchas.repository.parameter.CustomSqlParameterSource.createUsoParameterSource;
@@ -52,6 +53,19 @@ public class UsoJdbcRepository implements UsoRepository {
     }
 
     @Override
+    public List<Uso> findUsosDeRentaActiva() {
+        List<Uso> usos = jt.query(
+                "select u.* from usos as u join lancha_rentada as l on u.lancha_rentada_id = l.id and l.en_uso = 1;",
+                new UsoMapper());
+        List<Renta> rentas = rentaJdbcRepository.findAll();
+//        System.out.println(rentas);
+        for(Uso uso: usos) {
+            uso.setRenta(EntityUtils.getById(rentas, Renta.class, uso.getRenta_id()));
+        }
+        return usos;
+    }
+
+    @Override
     public Optional<Uso> findById(Long id) {
         Optional<Uso> usoOptional = jt.query("select * from usos where id=?;", Extractor.EXTRACTOR_USO, id);
         if (usoOptional != null && usoOptional.isPresent()) {
@@ -72,4 +86,5 @@ public class UsoJdbcRepository implements UsoRepository {
                 uso.getRenta_id(), uso.getTiempo(), uso.getPrecio(), uso.getId());
         return this.findById(uso.getId());
     }
+
 }

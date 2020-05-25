@@ -6,6 +6,9 @@ import javax.validation.constraints.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
+// TODO: Se puede agregar campos para algún dato del cliente
+// esto por si le pasa algo a la lancha poder contactarlo de algúna manera
+// y claro saber al menos el nombre y/o número de el responsable que se haya subido
 /**
  * Clase modelo para la tabla "lancha_rentada" de la base de datos.
  */
@@ -25,6 +28,7 @@ public class Renta extends BaseClass {
      * Fecha de la renta.
      */
     @NotNull
+    @Size(max = 10)
     private String fecha;
     /**
      * Muestra si está en uso o no la lancha.

@@ -53,6 +53,13 @@ public class RentaJdbcRepository implements RentaRepository<Renta> {
     }
 
     @Override
+    public List<Renta> findRentasActivas() {
+        List<Renta> rentas = this.findAll();
+        rentas.removeIf(renta -> !renta.isEn_uso());
+        return rentas;
+    }
+
+    @Override
     public Optional<Renta> findById(Long id) {
         Optional<Renta> renta = jt.query("select * from lancha_rentada where id=?;", EXTRACTOR_RENTA, id);
         if (renta != null && renta.isPresent()) {
@@ -80,4 +87,5 @@ public class RentaJdbcRepository implements RentaRepository<Renta> {
         jt.update("update lancha_rentada set en_uso=? where id=?", uso, id);
         return this.findById(id);
     }
+
 }

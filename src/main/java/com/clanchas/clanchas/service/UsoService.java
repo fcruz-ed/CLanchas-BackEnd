@@ -27,6 +27,10 @@ public class UsoService implements BaseService<Uso> {
         return repository.findAll();
     }
 
+    public List<Uso> findUsosDeRentaActiva() {
+        return repository.findUsosDeRentaActiva();
+    }
+
     @Override
     public Uso findById(Long id) {
         return repository.findById(id).orElse(null);

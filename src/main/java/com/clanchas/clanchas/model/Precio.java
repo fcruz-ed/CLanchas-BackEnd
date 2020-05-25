@@ -4,13 +4,14 @@ import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-import java.util.Date;
+import javax.validation.constraints.Size;
 
 public class Precio extends BaseClass {
     /**
      * tiempo del Tabulador de Precios
      */
     @NotNull
+    @Size(max = 10)
     private String tiempo;
     /**
      * precio por el tiempo
@@ -20,28 +21,28 @@ public class Precio extends BaseClass {
     private Double precio;
     /**
      * estado del precio
-     * 0 -> Activo
-     * 1 -> Desactivo
+     * 0 -> Desactivo
+     * 1 -> Activo / Default
      */
-    @NotNull
-    @PositiveOrZero
-    private short estado;
+    @Nullable
+    private boolean estado;
     /**
      * fecha en la que se puso el precio
      */
-    @Nullable
-    private Date fecha = new Date();
+    @NotNull
+    @Size(max = 10)
+    private String fecha;
 
     public Precio() {
     }
 
-    public Precio(String tiempo, Double precio, short estado) {
+    public Precio(String tiempo, Double precio, boolean estado) {
         this.tiempo = tiempo;
         this.precio = precio;
         this.estado = estado;
     }
 
-    public Precio(Long id, String tiempo, Double precio, short estado) {
+    public Precio(Long id, String tiempo, Double precio, boolean estado) {
         this.id = id;
         this.tiempo = tiempo;
         this.precio = precio;
@@ -64,19 +65,30 @@ public class Precio extends BaseClass {
         this.precio = precio;
     }
 
-    public short getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(short estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    @Override
+    public String toString() {
+        return "Precio{" +
+                "tiempo='" + tiempo + '\'' +
+                ", precio=" + precio +
+                ", estado=" + estado +
+                ", fecha='" + fecha + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

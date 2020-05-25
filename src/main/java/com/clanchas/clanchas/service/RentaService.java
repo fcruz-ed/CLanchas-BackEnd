@@ -27,6 +27,10 @@ public class RentaService implements BaseService<Renta> {
         return repository.findAll();
     }
 
+    public List<Renta> findRentasActivas() {
+        return repository.findRentasActivas();
+    }
+
     @Override
     public Renta findById(Long id) {
         return repository.findById(id).orElse(null);
