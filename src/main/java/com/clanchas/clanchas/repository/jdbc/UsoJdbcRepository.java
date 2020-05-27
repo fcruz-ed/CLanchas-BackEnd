@@ -58,7 +58,6 @@ public class UsoJdbcRepository implements UsoRepository {
                 "select u.* from usos as u join lancha_rentada as l on u.lancha_rentada_id = l.id and l.en_uso = 1;",
                 new UsoMapper());
         List<Renta> rentas = rentaJdbcRepository.findAll();
-//        System.out.println(rentas);
         for(Uso uso: usos) {
             uso.setRenta(EntityUtils.getById(rentas, Renta.class, uso.getRenta_id()));
         }
