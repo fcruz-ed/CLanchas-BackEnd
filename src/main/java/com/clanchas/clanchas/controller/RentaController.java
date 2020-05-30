@@ -96,9 +96,4 @@ public class RentaController {
         return new ResponseEntity<>("Renta con id: " + id + " ha sido eliminada.", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{_:^(?!index\\.html|api).*$}")
-    public String redirectApi() {
-        log.info("URL entered directly into the Browser, so we need to redirect...");
-        return "forward:/";
-    }
 }

@@ -13,6 +13,8 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/diario")
+@CrossOrigin(value = "http://localhost:8080", allowedHeaders = "*", maxAge = 3600,
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class DiarioContoller {
 
     private final Log log = LogFactory.getLog(getClass());
@@ -73,9 +75,4 @@ public class DiarioContoller {
         return ResponseEntity.ok("Se ha eliminado el Diario con id: " + id);
     }
 
-    @RequestMapping(value = "{_:^(?!index\\.html|api).*$}")
-    public String redirectApi() {
-        log.info("URL entered directly into the Browser, so we need to redirect...");
-        return "forward:/";
-    }
 }
