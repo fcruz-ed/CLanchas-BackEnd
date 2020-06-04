@@ -58,5 +58,13 @@ public abstract class CustomSqlParameterSource {
                 .addValue("tiempo", uso.getTiempo())
                 .addValue("precio", uso.getPrecio());
     }
+    /**
+     * Creates a {@link MapSqlParameterSource} based on data values from the supplied {@link Persona} instance.
+     */
+    public static MapSqlParameterSource createPersonaParameterSource(Persona persona) {
+        return new MapSqlParameterSource()
+                .addValue("id", persona.getId())
+                .addValue("nombre", persona.getNombre());
+    }
 
 }

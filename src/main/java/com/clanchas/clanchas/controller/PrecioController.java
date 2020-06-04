@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/precios")
-@CrossOrigin(value = "http://localhost:8080", allowedHeaders = "*", maxAge = 3600,
+@CrossOrigin(value = "*", allowedHeaders = "*", maxAge = 3600,
         methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class PrecioController {
 
@@ -79,7 +79,8 @@ public class PrecioController {
         if(precio == null) {
             return new ResponseEntity<>("Precio con id: " + id + " no encontrado.", HttpStatus.NOT_FOUND);
         }
-        service.delete(id);
+        precio.setEstado(false);
+        service.update(precio);
         return new ResponseEntity<>("Precio con id: "+id+" ha sido eliminado.", HttpStatus.OK);
     }
 

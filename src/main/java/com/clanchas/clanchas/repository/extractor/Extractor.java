@@ -14,6 +14,7 @@ public abstract class Extractor {
     public static final ResultSetExtractor<Optional<Diario>> EXTRACTOR_DIARIO = singletonOptionalExtractor(new DiarioMapper());
     public static final ResultSetExtractor<Optional<Renta>> EXTRACTOR_RENTA = singletonOptionalExtractor(new RentaMapper());
     public static final ResultSetExtractor<Optional<Uso>> EXTRACTOR_USO = singletonOptionalExtractor(new UsoMapper());
+    public static final ResultSetExtractor<Optional<Persona>> EXTRACTOR_PERSONA = singletonOptionalExtractor(new PersonaMapper());
 
     private static <T> ResultSetExtractor<Optional<T>> singletonOptionalExtractor(RowMapper<? extends T> mapper) {
         return resultSet -> resultSet.next() ? Optional.ofNullable(mapper.mapRow(resultSet, 1)) : Optional.empty();

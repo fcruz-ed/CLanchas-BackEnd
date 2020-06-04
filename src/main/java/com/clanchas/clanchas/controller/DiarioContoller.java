@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/diario")
-@CrossOrigin(value = "http://localhost:8080", allowedHeaders = "*", maxAge = 3600,
+@CrossOrigin(value = "*", allowedHeaders = "*", maxAge = 3600,
         methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class DiarioContoller {
 
