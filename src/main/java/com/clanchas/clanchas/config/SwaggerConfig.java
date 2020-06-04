@@ -10,6 +10,11 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * Clase que habilita la documentación web de la aplicación
+ *
+ * EndPoint: /swagger-ui.html
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
