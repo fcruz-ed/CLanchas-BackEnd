@@ -27,7 +27,7 @@ public class ExceptionControllerAdvice {
         return ResponseEntity.badRequest().body(respJSONstring);
     }
 
-    private class ErrorInfo {
+    private static class ErrorInfo {
         public final String className;
         public final String exMessage;
 

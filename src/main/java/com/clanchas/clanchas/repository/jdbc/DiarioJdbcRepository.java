@@ -44,7 +44,7 @@ public class DiarioJdbcRepository implements DiarioRepository {
 
     @Override
     public List<Diario> findAll() {
-        return jt.query("select * from diario", new DiarioMapper());
+        return jt.query("select * from diario order by id desc", new DiarioMapper());
     }
 
     @Override
