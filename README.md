@@ -4,7 +4,7 @@ Sistema BackEnd tipo REST API para el control de Lanchas
 ## Diagrama ER
 La base de datos tiene un Diagrama ER de la siguiente manera:
 
-![Diagrama ER](https://github.com/SorrowVehemente/clanchas/extra/db_lanchas_diagrama.png "Diagrama ER")
+![Diagrama ER](https://github.com/SorrowVehemente/clanchas/blob/master/extra/db_lanchas_diagrama.png "Diagrama ER")
 
 La base de datos se detalla más [aquí](https://github.com/SorrowVehemente/clanchas-db "Repositorio para la base de datos del proyecto CLanchas").
 ## Dev
