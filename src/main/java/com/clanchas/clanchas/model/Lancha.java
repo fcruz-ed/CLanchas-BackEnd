@@ -65,4 +65,14 @@ public class Lancha extends BaseClass {
     public void setEstado(short estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Lancha{" +
+                "numero=" + numero +
+                ", nombre='" + nombre + '\'' +
+                ", estado=" + estado +
+                ", id=" + id +
+                '}';
+    }
 }
