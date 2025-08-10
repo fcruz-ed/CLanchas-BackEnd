@@ -1,0 +1,4 @@
+
+TODO:
+# Estaria bien agregar la opción de ver las observaciones de rentas pasadas en alguna vista.
+
